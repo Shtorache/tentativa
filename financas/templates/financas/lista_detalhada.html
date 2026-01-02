@@ -1,0 +1,114 @@
+{% extends 'financas/base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background: #f4f6fb;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: auto;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .header h2 {
+        margin: 0;
+    }
+
+    table {
+        width: 100%;
+        background: white;
+        border-radius: 14px;
+        border-collapse: collapse;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    th {
+        background: #f1f3f9;
+        padding: 14px;
+        font-size: 14px;
+        text-align: left;
+    }
+
+    td {
+        padding: 14px;
+        border-top: 1px solid #eee;
+        font-size: 14px;
+    }
+
+    .badge {
+        padding: 6px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .ian { background: #4caf50; }
+    .julia { background: #9c27b0; }
+    .juntos { background: #1565c0; }
+
+    .entrada { color: #2e7d32; font-weight: bold; }
+    .saida { color: #c62828; font-weight: bold; }
+
+    .actions {
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        padding: 10px 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-right: 6px;
+        background: #f1f3f9;
+        color: #333;
+    }
+</style>
+
+<div class="container">
+
+    <div class="header">
+        <h2>📋 Lançamentos (ordem alfabética)</h2>
+        <span><strong>Usuário:</strong> {{ pessoa }}</span>
+    </div>
+
+    <div class="actions">
+        <a href="{% url 'dashboard' %}" class="btn">← Voltar</a>
+    </div>
+
+    <table>
+        <tr>
+            <th>Descrição</th>
+            <th>Pessoa</th>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Data</th>
+        </tr>
+
+        {% for m in movimentos %}
+        <tr>
+            <td>{{ m.origem }}</td>
+            <td>
+                <span class="badge {{ m.pessoa|lower }}">
+                    {{ m.pessoa }}
+                </span>
+            </td>
+            <td class="{{ m.tipo }}">{{ m.tipo|upper }}</td>
+            <td>R$ {{ m.valor }}</td>
+            <td>{{ m.data }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,189 @@
+{% extends 'financas/base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background: #f4f6fb;
+    }
+
+    .container {
+        max-width: 520px;
+        margin: 40px auto;
+    }
+
+    .card {
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .header h2 {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .user-badge {
+        background: #e3f2fd;
+        color: #1565c0;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    label {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    select, input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+        margin-bottom: 18px;
+        transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    select:focus, input:focus {
+        outline: none;
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 12px;
+        font-size: 15px;
+        border-radius: 10px;
+        font-weight: bold;
+        text-decoration: none;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-save {
+        background: #4f46e5;
+        color: white;
+    }
+
+    .btn-save:hover {
+        background: #4338ca;
+    }
+
+    .btn-back {
+        background: #f1f3f9;
+        color: #333;
+    }
+
+    .btn-back:hover {
+        background: #e5e7eb;
+    }
+
+    .tipo-toggle {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .tipo-toggle label {
+        flex: 1;
+        padding: 12px;
+        text-align: center;
+        border-radius: 10px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        font-weight: bold;
+        color: #555;
+    }
+
+    .tipo-toggle input {
+        display: none;
+    }
+
+    .tipo-toggle input:checked + label {
+        background: #e8f5e9;
+        border-color: #2e7d32;
+        color: #2e7d32;
+    }
+
+    .tipo-toggle input[value="saida"]:checked + label {
+        background: #ffebee;
+        border-color: #c62828;
+        color: #c62828;
+    }
+</style>
+
+<div class="container">
+
+    <div class="card">
+
+        <!-- Cabeçalho -->
+        <div class="header">
+            <h2>Novo Lançamento</h2>
+            <span class="user-badge">{{ pessoa }}</span>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Tipo -->
+            <label>Tipo</label>
+            <div class="tipo-toggle">
+                <input type="radio" id="entrada" name="tipo" value="entrada" checked>
+                <label for="entrada">➕ Entrada</label>
+
+                <input type="radio" id="saida" name="tipo" value="saida">
+                <label for="saida">➖ Saída</label>
+            </div>
+
+            <!-- Origem -->
+            <label>Origem / Descrição</label>
+            <input
+                name="origem"
+                placeholder="Ex: Mercado, Salário, Aluguel..."
+                required
+                autofocus
+            >
+
+            <!-- Valor -->
+            <label>Valor</label>
+            <input
+                name="valor"
+                type="number"
+                step="0.01"
+                placeholder="0,00"
+                required
+            >
+
+            <!-- Botões -->
+            <div class="btn-group">
+                <a href="javascript:history.back()" class="btn btn-back">← Voltar</a>
+                <button type="submit" class="btn btn-save">💾 Salvar</button>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
